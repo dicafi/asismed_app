@@ -30,6 +30,14 @@ gem "bootsnap", require: false
 # gem "rack-cors"
 
 group :development, :test do
+  gem "rspec-rails", "~> 6.0"
+  gem "factory_bot_rails", "~> 6.2" # Optional: For test data factories
+  gem "faker", "~> 3.2"            # Optional: For generating fake data
+
+  gem "rubocop", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rspec", require: false
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
 
