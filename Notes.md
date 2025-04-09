@@ -3,6 +3,7 @@
 
 ## Arquitectura
 - **Backend**: Ruby on Rails (Heroku)
+    - GraphQL
 - **Base de datos**: PostgreSQL
 - **Frontend**: Flutter (multiplataforma)
 
