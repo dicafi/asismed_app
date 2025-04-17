@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  before_update :invalidate_session_token, if: :password_digest_changed?
 
   validates :password, presence: true, length: { minimum: 8 },
     if: -> { new_record? || !password.nil? }
@@ -37,5 +38,10 @@ class User < ApplicationRecord
 
   def activate
     update(active: true)
+  end
+
+private
+  def invalidate_session_token
+    self.session_token = nil
   end
 end

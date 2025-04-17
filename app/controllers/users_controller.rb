@@ -23,14 +23,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+      reset_session
+      redirect_to login_path, notice: 'Password updated successfully. Please log in again.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -38,7 +35,26 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        if @user.saved_change_to_password_digest?
+          if @user == current_user
+            reset_session
+            format.html {
+              redirect_to login_path,
+              notice: 'Password updated successfully. All sessions have been logged out. \
+                Please log in again.'
+            }
+          else
+            @user.update(session_token: nil)
+            format.html {
+              redirect_to @user, notice: 'Password updated successfully for the user. \
+                Their session has been reset.'
+            }
+          end
+        else
+          format.html {
+            redirect_to @user, notice: 'User was successfully updated.'
+          }
+        end
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,7 +74,7 @@ class UsersController < ApplicationController
     end
   end
 
-  private
+private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params.expect(:id))
@@ -66,7 +82,15 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :username, :password_digest, :profile, :last_name, :second_last_name,
-:first_name, :signature, :active ])
+      params.require(:user).permit(
+        :username,
+        :password_digest,
+        :profile,
+        :last_name,
+        :second_last_name,
+        :first_name,
+        :signature,
+        :active
+      )
     end
 end

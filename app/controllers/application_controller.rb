@@ -12,8 +12,9 @@ class ApplicationController < ActionController::Base
   private
 
   def require_login
-    unless session[:user_id]
-      render json: { error: 'Unauthorized access' }, status: :unauthorized
+    unless current_user && session[:session_token] == current_user.session_token
+      reset_session
+      redirect_to login_path, alert: 'You must be logged in to access this page.'
     end
   end
 
@@ -22,9 +23,9 @@ class ApplicationController < ActionController::Base
   end
 
   def check_session_expiration
-    if session[:last_seen_at] && session[:last_seen_at] < 1.minutes.ago
+    if session[:last_seen_at] && session[:last_seen_at] < 10.minutes.ago
       reset_session
-      render json: { error: 'Session has expired. Please log in again.' }, status: :unauthorized
+      redirect_to login_path, alert: 'Session has expired. Please log in again.'
     else
       session[:last_seen_at] = Time.current
     end

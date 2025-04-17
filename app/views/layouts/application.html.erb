@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Asismed App" %></title>
+    <title>Asismed</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -20,9 +20,19 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   </head>
 
   <body>
-    <%= yield %>
+    <main class="container mx-auto mt-28 px-5 flex">
+      <% if session[:user_id] %>
+        <p>Welcome, <%= User.find(session[:user_id]).username %>!</p>
+        <%= link_to 'Logout', logout_path, 'data-turbo-method': :delete, class: 'btn btn-danger' %>
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>
