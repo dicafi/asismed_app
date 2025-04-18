@@ -23,7 +23,8 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :phone_number,
-    format: { with: /\A\+?[0-9\s\-()]+\z/, message: 'only allows valid phone numbers' }
+    format: { with: /\A\+?[0-9\s\-()]+\z/, message: 'only allows valid phone numbers' },
+    allow_blank: true
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }

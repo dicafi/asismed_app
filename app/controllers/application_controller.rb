@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_session_expiration
-    if session[:last_seen_at] && session[:last_seen_at] < 10.minutes.ago
+    if session[:last_seen_at] && session[:last_seen_at] < 30.minutes.ago
       reset_session
       redirect_to login_path, alert: 'Session has expired. Please log in again.'
     else
