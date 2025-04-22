@@ -93,4 +93,23 @@ RSpec.describe ApplicationController, type: :controller do
       end
     end
   end
+
+  describe 'Session invalidation after user deletion' do
+    context 'when the user is deleted' do
+      before do
+        session[:user_id] = user.id
+        session[:session_token] = user.session_token
+        user.destroy # Eliminar al usuario
+      end
+
+      it 'resets the session and redirects to login' do
+        get :index # Simular una solicitud después de la eliminación
+
+        expect(session[:user_id]).to be_nil
+        expect(session[:session_token]).to be_nil
+        expect(response).to redirect_to(login_path)
+        expect(flash[:alert]).to eq('You must be logged in to access this page.')
+      end
+    end
+  end
 end

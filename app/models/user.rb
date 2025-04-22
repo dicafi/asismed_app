@@ -9,10 +9,8 @@ class User < ApplicationRecord
   # Validación opcional para complejidad de la contraseña
   validates :password, format: {
     with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}\z/,
-    message: <<~TEXT
-      must include at least one uppercase letter, one lowercase letter, one number,
-      and one special character
-    TEXT
+    message: 'must include at least one uppercase letter, one lowercase letter, one number, ' +
+      'and one special character'
   }, if: -> { password.present? }
 
   validates :username, presence: true, uniqueness: true,
@@ -23,7 +21,7 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :phone_number,
-    format: { with: /\A\+?[0-9\s\-()]+\z/, message: 'only allows valid phone numbers' },
+    format: { with: /\A\+?\d{10}\z/, message: 'must be exactly 10 digits' },
     allow_blank: true
 
   scope :active, -> { where(active: true) }
