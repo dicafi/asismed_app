@@ -21,12 +21,11 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="min-h-screen flex items-center justify-center bg-gray-100">
       <% if session[:user_id] %>
         <p>Welcome, <%= User.find(session[:user_id]).username %>!</p>
         <%= link_to 'Logout', logout_path, 'data-turbo-method': :delete, class: 'btn btn-danger' %>

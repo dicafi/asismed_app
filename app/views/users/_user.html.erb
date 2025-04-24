@@ -1,42 +1,41 @@
-<div id="<%= dom_id user %>">
-  <p>
-    <strong>Username:</strong>
+<div id="<%= dom_id user %>" class="p-6 bg-white rounded-lg shadow-md border border-gray-200">
+  <p class="text-sm text-gray-500">
+    <strong class="font-medium text-gray-700">Username:</strong>
     <%= user.username %>
   </p>
 
-  <p>
-    <strong>Password digest:</strong>
+  <p class="text-sm text-gray-500">
+    <strong class="font-medium text-gray-700">Password digest:</strong>
     <%= user.password_digest %>
   </p>
 
-  <p>
-    <strong>Profile:</strong>
+  <p class="text-sm text-gray-500">
+    <strong class="font-medium text-gray-700">Profile:</strong>
     <%= user.profile %>
   </p>
 
-  <p>
-    <strong>Last name:</strong>
+  <p class="text-sm text-gray-500">
+    <strong class="font-medium text-gray-700">Last name:</strong>
     <%= user.last_name %>
   </p>
 
-  <p>
-    <strong>Second last name:</strong>
+  <p class="text-sm text-gray-500">
+    <strong class="font-medium text-gray-700">Second last name:</strong>
     <%= user.second_last_name %>
   </p>
 
-  <p>
-    <strong>First name:</strong>
+  <p class="text-sm text-gray-500">
+    <strong class="font-medium text-gray-700">First name:</strong>
     <%= user.first_name %>
   </p>
 
-  <p>
-    <strong>Signature:</strong>
+  <p class="text-sm text-gray-500">
+    <strong class="font-medium text-gray-700">Signature:</strong>
     <%= user.signature %>
   </p>
 
-  <p>
-    <strong>Active:</strong>
-    <%= user.active %>
+  <p class="text-sm text-gray-500">
+    <strong class="font-medium text-gray-700">Active:</strong>
+    <%= user.active ? "Yes" : "No" %>
   </p>
-
 </div>

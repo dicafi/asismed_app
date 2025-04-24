@@ -18,6 +18,7 @@ gem 'stimulus-rails'
 gem 'jbuilder'
 
 gem 'tailwindcss-rails', '~> 4.2', '>= 4.2.2'
+gem 'autoprefixer-rails', '~> 10.4', '>= 10.4.21.0'
 
 # Use Active Model has_secure_password
 # [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
@@ -73,3 +74,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 6.4'
 end
+
+gem "cssbundling-rails", "~> 1.4"
