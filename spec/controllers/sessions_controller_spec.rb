@@ -16,19 +16,20 @@ RSpec.describe SessionsController, type: :controller do
       it 'authenticates the user and sets the session' do
         post :create, params: { username: user.username, password: 'Password123!' }
 
-        expect(response).to have_http_status(:ok)
-        expect(session[:user_id]).to eq(user.id)
+        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(users_path)
+          expect(session[:user_id]).to eq(user.id)
         expect(session[:session_token]).to eq(user.reload.session_token)
-        expect(JSON.parse(response.body)['message']).to eq('Login successful')
       end
     end
 
     context 'with invalid credentials' do
-      it 'returns an unauthorized status' do
+      it 'redirects to login with an alert' do
         post :create, params: { username: user.username, password: 'WrongPassword' }
 
-        expect(response).to have_http_status(:unauthorized)
-        expect(JSON.parse(response.body)['error']).to eq('Invalid username or password')
+        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(login_path)
+        expect(flash[:alert]).to eq('Invalid username or password')
         expect(session[:user_id]).to be_nil
         expect(session[:session_token]).to be_nil
       end
@@ -38,8 +39,9 @@ RSpec.describe SessionsController, type: :controller do
       it 'returns an unauthorized status' do
         post :create, params: { username: 'nonexistent@example.com', password: 'Password123!' }
 
-        expect(response).to have_http_status(:unauthorized)
-        expect(JSON.parse(response.body)['error']).to eq('Invalid username or password')
+        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(login_path)
+        expect(flash[:alert]).to eq('Invalid username or password')
         expect(session[:user_id]).to be_nil
         expect(session[:session_token]).to be_nil
       end
