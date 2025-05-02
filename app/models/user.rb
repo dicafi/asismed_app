@@ -23,6 +23,7 @@ class User < ApplicationRecord
   validates :phone_number,
     format: { with: /\A\+?\d{10}\z/, message: 'must be exactly 10 digits' },
     allow_blank: true
+  validates :office, presence: true
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
