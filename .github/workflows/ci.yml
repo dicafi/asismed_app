@@ -85,6 +85,14 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Set up database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/asismed_app_test
+        run: |
+          bin/rails db:create
+          bin/rails db:migrate
+
       - name: Run tests
         env:
           RAILS_ENV: test
