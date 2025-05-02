@@ -12,9 +12,10 @@ class SessionsController < ApplicationController
       session[:session_token] = user.session_token
       session[:user_id] = user.id
 
-      render json: { message: 'Login successful', user: user }, status: :ok
+      redirect_to users_path, notice: 'Login successful'
     else
-      render json: { error: 'Invalid username or password' }, status: :unauthorized
+      flash[:alert] = 'Invalid username or password'
+      redirect_to login_path
     end
   end
 
