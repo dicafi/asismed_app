@@ -70,7 +70,8 @@ private
         :second_last_name,
         :first_name,
         :signature,
-        :active
+        :active,
+        :office
       )
     end
 

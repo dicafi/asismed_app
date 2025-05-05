@@ -13,5 +13,6 @@ FactoryBot.define do
     profile { Faker::Lorem.word }
     signature { Faker::Internet.url }
     active { true }
+    office { "Consultorio 2" }
   end
 end
