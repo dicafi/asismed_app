@@ -18,7 +18,7 @@ gem 'stimulus-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 
-gem 'tailwindcss-rails', '~> 4.2', '>= 4.2.2'
+gem 'tailwindcss-rails', '~> 4.2'
 gem 'autoprefixer-rails', '~> 10.4', '>= 10.4.21.0'
 
 # Use Active Model has_secure_password
