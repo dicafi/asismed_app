@@ -44,7 +44,7 @@ CITAS
 		- REQUERIDO Fecha
 		- REQUERIDO Hora
 		- REQUERIDO Paciente (RELACION hacia PACIENTES, una CITA pertenece a un PACIENTE)
-		- REQUERIDO Médico/Consultorio (talvez el registro del Médico tiene registrado en qué consultorio labora)
+		- REQUERIDO Médico (RELACION hacia USUARIOS, una CITA tiene un PACIENTE)
 		- Indicaciones (details)
     - Nota_medica (RELACION hacia NOTAS_MEDICAS, una CITA puede tener una NOTA_MEDICA)
 

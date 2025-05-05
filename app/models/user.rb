@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password
   before_update :invalidate_session_token, if: :password_digest_changed?
 
+  has_many :appointments, foreign_key: 'doctor_id'
+
   validates :password, presence: true, length: { minimum: 8 },
     if: -> { new_record? || !password.nil? }
   validates :password_confirmation, presence: true, if: -> { new_record? || !password.nil? }
