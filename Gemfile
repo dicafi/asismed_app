@@ -18,7 +18,7 @@ gem 'stimulus-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 
-gem 'tailwindcss-rails', '~> 4.2', '>= 4.2.2'
+gem 'tailwindcss-rails', '~> 4.2'
 gem 'autoprefixer-rails', '~> 10.4', '>= 10.4.21.0'
 
 # Use Active Model has_secure_password
@@ -58,7 +58,7 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem 'rubocop-rails-omakase', require: false
 
-  gem 'rspec-rails', '~> 7.1', '>= 7.1.1'
+  gem 'rspec-rails', '~> 8.0'
   gem 'factory_bot_rails', '~> 6.4', '>= 6.4.4'
   gem 'faker', '~> 3.5', '>= 3.5.1'
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.5'
