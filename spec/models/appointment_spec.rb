@@ -80,7 +80,7 @@ RSpec.describe Appointment, type: :model do
 
   describe '#date_cannot_be_in_the_past' do
     context 'when the date is in the past' do
-      let(:date) { Date.yesterday }
+      let(:date) { 2.days.ago }
 
       it 'is not valid' do
         expect(subject).not_to be_valid
