@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe EducationLevelsController, type: :controller do
+RSpec.describe MaritalStatusesController, type: :controller do
   let!(:user) { create(:user) }
 
   before do
@@ -9,23 +9,23 @@ RSpec.describe EducationLevelsController, type: :controller do
   end
 
   describe 'GET #index' do
-    it 'returns all education levels as JSON' do
+    it 'returns all marital statuses as JSON' do
       get :index
 
       expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)).to eq(EducationLevel.all.as_json)
+      expect(JSON.parse(response.body)).to eq(MaritalStatus.all.as_json)
     end
   end
 
   describe 'GET #show' do
     context 'when the ID exists' do
-      it 'returns the education level with the given ID as JSON' do
+      it 'returns the marital status with the given ID as JSON' do
         get :show, params: { id: 1 }
 
         expect(response).to have_http_status(:ok)
         expect(JSON.parse(response.body)).to eq({
           'id' => 1,
-          'description' => 'Primaria'
+          'description' => 'Casado(a)'
         })
       end
     end
@@ -35,7 +35,7 @@ RSpec.describe EducationLevelsController, type: :controller do
         get :show, params: { id: 999 }
 
         expect(response).to have_http_status(:not_found)
-        expect(JSON.parse(response.body)).to eq({ 'error' => 'Education level not found' })
+        expect(JSON.parse(response.body)).to eq({ 'error' => 'Marital status not found' })
       end
     end
   end

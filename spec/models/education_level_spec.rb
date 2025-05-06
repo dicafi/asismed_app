@@ -6,7 +6,7 @@ RSpec.describe EducationLevel, type: :model do
       levels = EducationLevel.all
 
       expect(levels).to be_a(Hash)
-      expect(levels.keys).to match_array([0, 1, 2, 3, 4, 5, 6, 7])
+      expect(levels.keys).to match_array([ 0, 1, 2, 3, 4, 5, 6, 7 ])
       expect(levels[0][:description]).to eq('No Aplica')
       expect(levels[7][:description]).to eq('Doctorado')
     end
