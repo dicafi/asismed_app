@@ -15,7 +15,7 @@ RSpec.describe UsersController, type: :controller do
       get :index
 
       expect(response).to have_http_status(:ok)
-      expect(assigns(:users)).to eq([ user, admin ])
+      expect(assigns(:users)).to match_array([ admin, user ])
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.describe UsersController, type: :controller do
         get :show, params: { id: SecureRandom.uuid }
 
         expect(response).to redirect_to(users_path)
-        expect(flash[:alert]).to eq('User not found.')
+        expect(flash[:alert]).to eq('Usuario no encontrado.')
       end
     end
   end
@@ -55,7 +55,7 @@ RSpec.describe UsersController, type: :controller do
         }.to change(User, :count).by(1)
 
         expect(response).to redirect_to(users_path)
-        expect(flash[:notice]).to eq('User was successfully created.')
+        expect(flash[:notice]).to eq('Usuario creado correctamente.')
       end
     end
 
@@ -67,7 +67,7 @@ RSpec.describe UsersController, type: :controller do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response).to render_template(:new)
-        expect(flash[:alert]).to eq('There was an error creating the user.')
+        expect(flash[:alert]).to eq('Error al crear al usuario.')
       end
     end
   end
@@ -88,7 +88,7 @@ RSpec.describe UsersController, type: :controller do
 
         expect(user.reload.first_name).to eq('Updated')
         expect(response).to redirect_to(user)
-        expect(flash[:notice]).to eq('User was successfully updated.')
+        expect(flash[:notice]).to eq('Datos actualizados.')
       end
     end
 
@@ -97,6 +97,7 @@ RSpec.describe UsersController, type: :controller do
         patch :update, params: { id: user.id, user: { username: nil } }
 
         expect(user.reload.username).not_to be_nil
+        expect(flash[:alert]).to eq('Error al actualizar al usuario.')
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response).to render_template(:edit)
       end
@@ -135,8 +136,7 @@ RSpec.describe UsersController, type: :controller do
 
           expect(session[:user_id]).to be_nil
           expect(response).to redirect_to(login_path)
-          expect(flash[:notice]).to eq('Password updated successfully. All sessions have been ' +
-            'logged out. Please log in again.')
+          expect(flash[:notice]).to eq('Contraseña actualizada. Por favor ingrese nuevamente.')
         end
       end
 
@@ -154,8 +154,8 @@ RSpec.describe UsersController, type: :controller do
 
           expect(other_user.reload.session_token).to be_nil
           expect(response).to redirect_to(other_user)
-          expect(flash[:notice]).to eq('Password updated successfully for the user. Their ' +
-            'session has been reset.')
+          expect(flash[:notice]).to eq('Contraseña actualizada para el usuario. ' +
+            'Se han terminado todas las sesiones del usuario.')
         end
       end
     end
@@ -163,15 +163,15 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'DELETE #destroy' do
     context 'when the user exists' do
-      it 'deletes the user and redirects to users index' do
-        user = create(:user)
-
+      it 'deactivates the user and redirects to the users index' do
         expect {
           delete :destroy, params: { id: user.id }
-        }.to change(User, :count).by(-1)
+        }.not_to change(User, :count)
 
+        expect(user.reload.active).to be_falsey
+        expect(response).to have_http_status(:see_other)
         expect(response).to redirect_to(users_path)
-        expect(flash[:notice]).to eq('User was successfully destroyed.')
+        expect(flash[:notice]).to eq('Usuario dado de baja correctamente.')
       end
     end
 
@@ -180,7 +180,7 @@ RSpec.describe UsersController, type: :controller do
         delete :destroy, params: { id: SecureRandom.uuid }
 
         expect(response).to redirect_to(users_path)
-        expect(flash[:alert]).to eq('User not found.')
+        expect(flash[:alert]).to eq('Usuario no encontrado.')
       end
     end
   end

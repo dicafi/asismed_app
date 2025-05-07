@@ -15,6 +15,7 @@ RSpec.describe User, type: :model do
     it { should validate_length_of(:password).is_at_least(8).on(:create) }
     it { should validate_presence_of(:password_confirmation).on(:create) }
     it { should validate_confirmation_of(:password).on(:create) }
+    it { should validate_presence_of(:office) }
 
     it 'validates password complexity' do
       user.password = 'simple'

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'dashboard#index'
+  resources :education_levels, only: [ :index, :show ]
+  resources :marital_statuses, only: [ :index, :show ]
+  resources :insurers, only: [ :index, :show ]
   resources :users
   # Sessions routes
   get '/login', to: 'sessions#new'

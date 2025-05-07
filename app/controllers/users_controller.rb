@@ -24,9 +24,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to users_path, notice: 'User was successfully created.'
+      redirect_to users_path, notice: 'Usuario creado correctamente.'
     else
-      flash.now[:alert] = 'There was an error creating the user.'
+      flash.now[:alert] = 'Error al crear al usuario.'
       render :new, status: :unprocessable_entity
     end
   end
@@ -36,18 +36,18 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       return handle_password_change if @user.saved_change_to_password_digest?
 
-      redirect_to @user, notice: 'User was successfully updated.'
+      redirect_to @user, notice: 'Datos actualizados.'
     else
-      flash.now[:alert] = 'There was an error updating the user.'
+      flash.now[:alert] = 'Error al actualizar al usuario.'
       render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    @user.destroy!
+    @user.deactivate
 
-    redirect_to users_path, status: :see_other, notice: 'User was successfully destroyed.'
+    redirect_to users_path, status: :see_other, notice: 'Usuario dado de baja correctamente.'
   end
 
 private
@@ -55,7 +55,7 @@ private
     def set_user
       @user = User.find_by(id: params.expect(:id))
       unless @user
-        redirect_to users_path, alert: 'User not found.'
+        redirect_to users_path, alert: 'Usuario no encontrado.'
       end
     end
 
@@ -78,12 +78,12 @@ private
     def handle_password_change
       if @user == current_user
         reset_session
-        redirect_to login_path, notice: 'Password updated successfully. ' +
-          'All sessions have been logged out. Please log in again.'
+        redirect_to login_path, notice: 'Contraseña actualizada. ' +
+          'Por favor ingrese nuevamente.'
       else
         @user.update(session_token: nil)
-        redirect_to @user, notice: 'Password updated successfully for the user. ' +
-          'Their session has been reset.'
+        redirect_to @user, notice: 'Contraseña actualizada para el usuario. ' +
+          'Se han terminado todas las sesiones del usuario.'
       end
     end
 end
