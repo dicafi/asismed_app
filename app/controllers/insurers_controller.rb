@@ -9,7 +9,7 @@ class InsurersController < ApplicationController
     if insurer
       render json: insurer
     else
-      render json: { error: 'Insurer not found' }, status: :not_found
+      render json: { error: 'Aseguradora no encontrada' }, status: :not_found
     end
   end
 end

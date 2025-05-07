@@ -4,12 +4,12 @@ class EducationLevelsController < ApplicationController
   end
 
   def show
-    level = EducationLevel::LEVELS[params[:id].to_i]
+    educational_level = EducationLevel.find_by(id: params[:id].to_i)
 
-    if level
-      render json: { id: params[:id].to_i, description: level[:description] }
+    if educational_level
+      render json: educational_level
     else
-      render json: { error: 'Education level not found' }, status: :not_found
+      render json: { error: 'Nivel educativo no encontrado' }, status: :not_found
     end
   end
 end

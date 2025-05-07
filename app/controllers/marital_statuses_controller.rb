@@ -4,12 +4,12 @@ class MaritalStatusesController < ApplicationController
   end
 
   def show
-    status = MaritalStatus::STATUSES[params[:id].to_i]
+    marital_status = MaritalStatus.find_by(id: params[:id].to_i)
 
-    if status
-      render json: { id: params[:id].to_i, description: status[:description] }
+    if marital_status
+      render json: marital_status
     else
-      render json: { error: 'Marital status not found' }, status: :not_found
+      render json: { error: 'Estado civil no encontrado' }, status: :not_found
     end
   end
 end

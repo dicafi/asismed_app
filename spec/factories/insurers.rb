@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :insurer do
-    description { "MyString" }
+    description { Faker::Company.name }
   end
 end

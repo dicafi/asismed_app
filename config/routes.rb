@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   resources :education_levels, only: [ :index, :show ]
   resources :marital_statuses, only: [ :index, :show ]
-  resources :insurers, only: [:index, :show]
+  resources :insurers, only: [ :index, :show ]
   resources :users
   # Sessions routes
   get '/login', to: 'sessions#new'

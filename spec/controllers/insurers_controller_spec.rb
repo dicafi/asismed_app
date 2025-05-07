@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe InsurersController, type: :controller do
-  let!(:user) { create(:user) }
   let!(:insurer1) { create(:insurer, description: 'IMSS') }
   let!(:insurer2) { create(:insurer, description: 'ISSSTE') }
+  let!(:user) { create(:user) }
 
   before do
     session[:user_id] = user.id
@@ -51,7 +51,7 @@ RSpec.describe InsurersController, type: :controller do
         get :show, params: { id: 999 }
 
         expect(response).to have_http_status(:not_found)
-        expect(JSON.parse(response.body)).to eq({ 'error' => 'Insurer not found' })
+        expect(JSON.parse(response.body)).to eq({ 'error' => 'Aseguradora no encontrada' })
       end
     end
   end
