@@ -3,10 +3,9 @@ require 'rails_helper'
 RSpec.describe Appointment, type: :model do
   subject { appointment }
 
-  let(:appointment) { Appointment.new(appointment_atts) }
+  let(:appointment) { build(:appointment, appointment_atts) }
   let(:patient) { create(:patient) }
   let(:doctor) { create(:user) }
-  let(:medical_note) { create(:medical_note) }
   let(:date) { Date.today }
   let(:time) { Time.now }
   let(:appointment_atts) do
@@ -15,7 +14,13 @@ RSpec.describe Appointment, type: :model do
       time: time,
       patient: patient,
       doctor: doctor,
-      medical_note: medical_note
+      status: :active
+    }
+  end
+
+  describe 'enums' do
+    it { should define_enum_for(:status).with_values(
+      active: 0, canceled: 1, rescheduled: 2, attended: 3)
     }
   end
 
