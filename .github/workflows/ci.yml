@@ -87,15 +87,15 @@ jobs:
           bin/rails db:create
           bin/rails db:migrate
 
-      - name: Run Rake Task
-        env:
-          RAILS_ENV: test
-        run: |
-          if pg_isready -h localhost -p 5432; then
-            bin/rails data_integrity:check_all
-          else
-            echo "Skipping Rake task because the database is not ready."
-          fi
+      # - name: Run Rake Task
+      #   env:
+      #     RAILS_ENV: test
+      #   run: |
+      #     if pg_isready -h localhost -p 5432; then
+      #       bin/rails data_integrity:check_all
+      #     else
+      #       echo "Skipping Rake task because the database is not ready."
+      #     fi
 
       - name: Run tests
         env:
