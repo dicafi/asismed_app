@@ -6,6 +6,8 @@ class Appointment < ApplicationRecord
   validates :date, :time, :patient, :doctor, presence: true
   validate :date_cannot_be_in_the_past
 
+  enum :status, [ :active, :canceled, :rescheduled, :attended ]
+
 private
   def date_cannot_be_in_the_past
     errors.add(:date, "can't be in the past") if date.present? && date < Date.today

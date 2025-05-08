@@ -43,3 +43,17 @@ if EducationLevel.count.zero?
 else
   puts 'EducationLevels already exist, skipping creation.'
 end
+
+# Diagnostics
+if Diagnostic.count.zero?
+  puts 'Creating Diagnostics...'
+  Diagnostic.create([
+    { key: 'A00', description: 'Cólera' },
+    { key: 'A01', description: 'Fiebre tifoidea y paratifoidea' },
+    { key: 'A02', description: 'Otras infecciones intestinales debidas a microorganismos' },
+    { key: 'A03', description: 'Shigelosis' },
+    { key: 'A04', description: 'Otras infecciones intestinales bacterianas' }
+  ])
+else
+  puts 'Diagnostics already exist, skipping creation.'
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_07_070550) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_08_174537) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -24,9 +24,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_070550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "doctor_id", default: -> { "gen_random_uuid()" }
+    t.integer "status", default: 0, null: false
     t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
     t.index ["medical_note_id"], name: "index_appointments_on_medical_note_id"
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
+  end
+
+  create_table "diagnostics", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_diagnostics_on_key", unique: true
   end
 
   create_table "education_levels", force: :cascade do |t|
@@ -51,6 +60,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_070550) do
     t.text "ta"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "spo2"
+    t.decimal "temperature"
+    t.decimal "glucose"
+    t.decimal "fr"
+    t.decimal "fc"
+    t.decimal "weight"
+    t.decimal "height"
+    t.text "current_condition"
+    t.text "physical_examination"
+    t.text "treatment_plan"
+    t.text "prognosis"
+    t.bigint "appointment_id", null: false
+    t.index ["appointment_id"], name: "index_medical_notes_on_appointment_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -98,6 +120,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_070550) do
   add_foreign_key "appointments", "medical_notes"
   add_foreign_key "appointments", "patients"
   add_foreign_key "appointments", "users", column: "doctor_id"
+  add_foreign_key "medical_notes", "appointments"
   add_foreign_key "patients", "education_levels"
   add_foreign_key "patients", "insurers"
   add_foreign_key "patients", "marital_statuses"

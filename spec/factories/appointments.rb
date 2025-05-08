@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :appointment do
-    date { "2025-05-01" }
-    time { "2025-05-01 23:04:10" }
-    patient { nil }
-    doctor { nil }
-    details { "MyText" }
-    medical_note { nil }
+    date { Faker::Date.forward(days: 30) }
+    time { Faker::Time.forward(days: 30, period: :morning) }
+    details { Faker::Lorem.paragraph }
+    status { :active }
+    association :patient
+    association :doctor, factory: :user
   end
 end
